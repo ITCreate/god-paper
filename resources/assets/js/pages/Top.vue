@@ -2,15 +2,23 @@
     <div id="page">
         <div id="contents">
             <h1 class="God">God Paper</h1>
-            <div id="form">
-                Language:
-                <select id="select-lang" v-model="request.language" @change="findExtension">
-                    <option v-for="(text,val) in extensions">{{text}}</option>
-                </select>
-                <input type="file" @change="toBlob" id="file-select" :disabled="ran">
-                <button type="button" v-on:click="paizaRun(request.source_code, request.language)" :disabled="!writed || ran">Running</button>
-                <a href="" :download="nowExtension === undefined ? 'result.txt' : 'result.' + nowExtension" id="download-link" v-on:click="fileSave">Download</a>
-            </div>
+                <div id="form">
+                    <div class="form_inner">
+                        <span>Language:</span>
+                        <select id="select-lang" v-model="request.language" @change="findExtension">
+                            <option v-for="(text,val) in extensions">{{text}}</option>
+                        </select>
+                    </div>
+                    <div class="form_inner">
+                        <input type="file" @change="toBlob" id="file-select" :disabled="ran">
+                    </div>
+                    <div class="form_inner">
+                        <button type="button" v-on:click="paizaRun(request.source_code, request.language)" :disabled="!writed || ran" id="runbtn">Running</button>
+                    </div>
+                    <div class="form_inner">
+                        <a href="" :download="nowExtension === undefined ? 'result.txt' : 'result.' + nowExtension" id="download-link" v-on:click="fileSave">Download</a>
+                    </div>
+                </div>
             <div id="textarea">Response: <textarea id="response-textarea" v-model="request.source_code"></textarea></div>
             <div id="image">Image: <img :src="image" alt=""></div>
             <div>Result:
@@ -146,11 +154,15 @@
 </script>
 
 <style lang="scss" scoped>
+    $btnBg : #c0c0c0;
+    $btnBg_on : #dcdcdc;
+
     #response-textarea {
         display: block;
         width: 580px;
         height: 400px;
         font-size: 20px;
+        resize:none;
     }
 
     h1 {
@@ -182,17 +194,58 @@
         position: relative;
         width: 100%;
         max-width: 1280px;
-        margin: 0 auto;
         padding: 0;
-        text-align: center;
     }
-    .form-inner{
+    .form_inner{
         display: inline-block;
         box-sizing: border-box;
         padding: 0 20px;
         margin: 0;
-        width: auto;
+        min-width: 24%;
         height: 30px;
+
+        #select-lang{
+            width: 150px;
+        }
+        #file-select{
+            border:0px solid;
+            border-color:#87cefa;
+
+            &:hover{
+                text-decoration:none;
+                color:red;
+            }
+        }
+        #runbtn{
+            width:150px;
+            background-color:$btnBg;
+            border:0px solid;
+            border-color:#87cefa;
+
+            &:hover{
+                background-color:$btnBg_on;
+                text-decoration:none;
+                color:red;
+            }
+        }
+        #download-link{
+            display:block;
+            width:150px;
+            border:0px solid;
+            text-align:center;
+            color:#000;
+            border-color:#87cefa;
+            background-color:$btnBg;
+
+            &:hover{
+                background-color:$btnBg_on;
+                text-decoration:none;
+                color:red;
+            }
+            &:visited{
+                text-decoration:none;
+            }
+        }
     }
 
 
